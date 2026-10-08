@@ -5,6 +5,7 @@ Live award voting for ISB Section J: phones vote, the admin runs each award, the
 - `index.html`: phone voting app
 - `admin.html`: admin panel (live control, awards, people, results)
 - `screen.html`: big screen for the projector
+- `cards.html`: power card reveal, one study group at a time (images in `cards/`)
 - `supabase/schema.sql`: the whole database (tables, rules, the 69 names, sample awards)
 - `js/config.js`: the only file to edit (your Supabase URL and key)
 - `tools/loadtest.mjs`: rehearsal load test (80 simulated phones)

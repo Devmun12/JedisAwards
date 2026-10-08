@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Power Cards · Jedis Awards</title>
+<meta name="description" content="The Order of Jedis power cards, revealed one study group at a time.">
+<meta name="theme-color" content="#0b0b0b">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="assets/favicon.png" type="image/png">
+<link rel="preload" href="fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/cards.css">
+</head>
+<body class="cards-page">
+<canvas id="stars" aria-hidden="true"></canvas>
+
+<main id="picker" class="deck-picker" aria-labelledby="picker-title">
+  <header class="picker-head">
+    <img src="assets/logo.png" alt="" class="picker-logo">
+    <span class="gold caps-wide">Order of Jedis</span>
+    <h1 id="picker-title">Power Cards</h1>
+    <p class="picker-sub" id="picker-sub"></p>
+  </header>
+  <div class="sg-grid" id="sg-grid"></div>
+  <p class="keys">Click or <kbd>Space</kbd> next · <kbd>←</kbd> back · <kbd>F</kbd> full screen · <kbd>S</kbd> sound · <kbd>Esc</kbd> groups
+    · <button class="linkish" id="reset-done">Mark all unrevealed</button></p>
+</main>
+
+<section id="stage" class="stage-cards" hidden aria-label="Card reveal">
+  <div class="rays" id="rays" aria-hidden="true"></div>
+  <div class="halo" id="halo" aria-hidden="true"></div>
+  <div class="dim" id="dim" aria-hidden="true"></div>
+  <div class="sg-title" id="sg-title"><span class="gold caps-wide">Study group</span><b id="sg-name"></b></div>
+  <div class="progress" id="progress" aria-hidden="true"></div>
+  <div class="deck" id="deck"></div>
+  <div class="caption" id="caption" aria-live="polite"></div>
+  <div class="hint" id="hint"></div>
+  <div class="flash" id="flash" aria-hidden="true"></div>
+</section>
+
+<canvas id="sparks" aria-hidden="true"></canvas>
+
+<div class="dock-ctl" id="dock-ctl">
+  <button class="btn sm" id="ctl-groups">Groups</button>
+  <button class="btn sm" id="ctl-sound"></button>
+  <button class="btn sm" id="ctl-fs">Full screen</button>
+</div>
+
+<script type="module" src="js/cards.js"></script>
+</body>
+</html>

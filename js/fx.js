@@ -137,3 +137,51 @@ export function applause({ seconds = 6, delay = 0 } = {}) {
     hit(at, { freq: 900 + Math.random() * 1800, q: 1.1, gain: 0.05 + env * 0.22 * Math.random(), decay: 0.03 + Math.random() * 0.03 });
   }
 }
+
+// ---------- Card reveal sounds ----------
+// A rising swell while the card charges up.
+export function riser(seconds = 1.2) {
+  if (!ensure()) return;
+  const t = ac.currentTime + 0.02;
+  const src = ac.createBufferSource(); src.buffer = noise; src.loop = true;
+  const bp = ac.createBiquadFilter(); bp.type = 'bandpass'; bp.Q.value = 2.5;
+  bp.frequency.setValueAtTime(300, t); bp.frequency.exponentialRampToValueAtTime(4200, t + seconds);
+  const g = ac.createGain(); g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.5, t + seconds);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + seconds + 0.08);
+  const o = ac.createOscillator(); o.type = 'sawtooth';
+  o.frequency.setValueAtTime(70, t); o.frequency.exponentialRampToValueAtTime(260, t + seconds);
+  const og = ac.createGain(); og.gain.setValueAtTime(0.0001, t); og.gain.exponentialRampToValueAtTime(0.07, t + seconds); og.gain.exponentialRampToValueAtTime(0.0001, t + seconds + 0.08);
+  src.connect(bp); bp.connect(g); g.connect(master); o.connect(og); og.connect(master);
+  src.start(t); src.stop(t + seconds + 0.1); o.start(t); o.stop(t + seconds + 0.1);
+}
+
+// The swish of the card spinning.
+export function whoosh(seconds = 1.1) {
+  if (!ensure()) return;
+  const t = ac.currentTime + 0.01;
+  const src = ac.createBufferSource(); src.buffer = noise;
+  const bp = ac.createBiquadFilter(); bp.type = 'bandpass'; bp.Q.value = 1.2;
+  bp.frequency.setValueAtTime(2500, t); bp.frequency.exponentialRampToValueAtTime(400, t + seconds);
+  const g = ac.createGain(); g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.35, t + seconds * 0.3);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + seconds);
+  src.connect(bp); bp.connect(g); g.connect(master); src.start(t, 0.3); src.stop(t + seconds + 0.05);
+}
+
+// Impact when the face lands: boom, crack and a shimmer of bells.
+export function impact() {
+  if (!ensure()) return;
+  const t = ac.currentTime + 0.01;
+  const o = ac.createOscillator(), og = ac.createGain();
+  o.frequency.setValueAtTime(140, t); o.frequency.exponentialRampToValueAtTime(38, t + 0.6);
+  og.gain.setValueAtTime(0.0001, t); og.gain.exponentialRampToValueAtTime(0.9, t + 0.01); og.gain.exponentialRampToValueAtTime(0.0001, t + 1.1);
+  o.connect(og); og.connect(master); o.start(t); o.stop(t + 1.2);
+  hit(t, { freq: 3000, q: 0.5, gain: 0.6, decay: 0.25 });
+  const notes = [1318.5, 1568, 1975.5, 2349.3, 2637, 3136];
+  notes.forEach((f, i) => {
+    const at = t + 0.05 + i * 0.055;
+    const s = ac.createOscillator(), sg = ac.createGain();
+    s.type = 'sine'; s.frequency.value = f;
+    sg.gain.setValueAtTime(0.0001, at); sg.gain.exponentialRampToValueAtTime(0.12, at + 0.01); sg.gain.exponentialRampToValueAtTime(0.0001, at + 1.2);
+    s.connect(sg); sg.connect(master); s.start(at); s.stop(at + 1.3);
+  });
+}

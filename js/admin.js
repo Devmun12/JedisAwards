@@ -122,6 +122,7 @@ function shell() {
       <div class="status-line">
         <span id="conn"></span>
         <a class="btn sm" href="screen.html" target="_blank" rel="noopener">${ICONS.screen} Big screen</a>
+        <a class="btn sm" href="cards.html" target="_blank" rel="noopener">Power cards</a>
         <button class="btn sm" id="sound" aria-pressed="${soundOn}"></button>
         <button class="btn sm ghost" id="logout">Sign out</button>
       </div>
